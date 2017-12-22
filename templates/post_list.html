@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+    <div class="col-sm-6 col-sm-offset-3">
+        {% for obj in object_list %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="thumbnail">
+                        {% if obj.image %}<img src="{{ obj.image.url }}" class="img-responsive"> {% endif %}
+                        <div class="caption">
+                            <h3>{% if obj.draft %}<span class="badge">Draft</span>{% endif %}<a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>
+                            {% if obj.user.get_full_name %}
+                                <p>Author: {{ obj.user.get_full_name }}</p>
+                            {% endif %}
+                            <p>{{ obj.content|linebreaks|truncatechars:80 }}</p>
+                            <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary">View</a> {% if request.user.is_superuser %}<a href="{{ obj.get_edit_url }}" class="btn btn-default">Edit</a> <a href="{{ obj.get_delete_url }}" class="btn btn-danger">Delete</a>{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+
+<nav aria-label="paginator">
+    <ul class="pager">
+        {% if object_list.has_previous %}
+            <li><a href="?page={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a></li>
+        {% endif %}
+        <li>Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}</li>
+        {% if object_list.has_next %}
+            <li><a href="?page={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+{% endblock %}
