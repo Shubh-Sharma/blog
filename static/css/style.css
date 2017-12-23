@@ -5,3 +5,14 @@
 body {
     margin-top: 10px;
 }
+
+.wmd-panel {
+    margin: 0 !important;
+    width: 100%;
+    min-width: 500px;
+}
+
+.controls select {
+    display: inline-block !important;
+    width: auto !important;
+}

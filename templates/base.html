@@ -9,6 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://getbootstrap.com/docs/3.3/examples/sticky-footer-navbar/sticky-footer-navbar.css">
     <title>{% block title %}try django 1.9{% endblock %}</title>
+    {% block head %} {% endblock %}
 </head>
 <body>
     <div id="fb-root"></div>
@@ -28,6 +29,45 @@
     {% endblock %}
     </div>
     <script type="text/javascript" src='{% static "js/jquery.min.js" %}'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.7/marked.min.js"></script>
     <script type="text/javascript" src='{% static "js/bootstrap.min.js" %}'></script>
+
+    <script>
+    $(document).ready(function(){
+        $(".content-markdown").each(function(){
+            var content = $(this).text()
+            var markedContent = marked(content)
+            $(this).html(markedContent)
+        })
+        $(".post-detail-item img").each(function(){
+            $(this).addClass("img-responsive")
+        })
+    })
+
+    var titleItem = $("#id_title")
+    $("#preview-title").text(titleItem.val())
+
+    var contentItem = $("#id_content")
+
+    function setContent(value){
+        var markedContent = marked(value)
+        $("#preview-content").html(markedContent)
+        $("#preview-content img").each(function(){
+            $(this).addClass("img-responsive")
+        })
+    }
+
+    function setTitle(value){
+        $("#preview-title").text(value)
+    }
+
+    titleItem.keyup(function(){
+        setTitle(titleItem.val())
+    })
+
+    contentItem.keyup(function(){
+        setContent(contentItem.val())
+    })
+    </script>
 </body>
 </html>
