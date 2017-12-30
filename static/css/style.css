@@ -2,7 +2,12 @@
     background-color: #A5D6A7;
 }
 
+body, input, button {
+    font-family: 'Roboto', sans-serif;
+}
+
 body {
+    background: #edf0f1;
     margin-top: 10px;
 }
 
@@ -16,3 +21,32 @@ body {
     display: inline-block !important;
     width: auto !important;
 }
+/*
+ul.comments {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li.comment {
+    position: relative;
+    list-style: none;
+    background: #fff;
+    border: 1px;
+    border-radius: 5px;
+    padding: 5px 20px;
+    margin: 0;
+    margin-bottom: 5px;
+    box-shadow: 1px 2px 2px #ddd;
+}
+
+li.comment:after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 80%;
+    width: 2px;
+    background: #aaa;
+}
+*/

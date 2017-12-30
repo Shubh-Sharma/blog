@@ -7,6 +7,8 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.safestring import mark_safe
 from markdown_deux import markdown
+from comments.models import Comment
+from django.contrib.contenttypes.models import ContentType
 # Create your models here.
 
 
@@ -51,6 +53,17 @@ class Post(models.Model):
 
     def get_edit_url(self):
         return reverse("posts:update", kwargs={"slug": self.slug})
+
+    @property
+    def comments(self):
+        qs = Comment.objects.filter_by_instance(self)
+        return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
 
     class Meta():
         ordering = ["-timestamp", "-updated"]

@@ -7,7 +7,9 @@ from django.utils import timezone
 from django.db.models import Q
 from .forms import PostForm
 from .models import Post
-
+from comments.models import Comment
+from comments.forms import CommentForm
+from django.contrib.contenttypes.models import ContentType
 
 
 def post_create(request):
@@ -30,10 +32,34 @@ def post_create(request):
 def post_detail(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
     share_string = quote_plus(instance.content)
+    comments = instance.comments
+    initial_data = {
+        "content_type": instance.get_content_type,
+        "object_id": instance.id
+    }
+    comment_form = CommentForm(request.POST or None, initial=initial_data)
+    if comment_form.is_valid():
+        c_type = comment_form.cleaned_data.get('content_type')
+        content_type = ContentType.objects.get(model=c_type)
+        obj_id = comment_form.cleaned_data.get('object_id')
+        content_data = comment_form.cleaned_data.get('content')
+        parent_id = None
+        try:
+            parent_id = int(request.POST.get("parent_id"))
+        except:
+            parent_id = None
+        if parent_id:
+            parent_qs = Comment.objects.filter(id=parent_id)
+            if parent_qs.exists():
+                parent_obj = parent_qs.first()
+        new_comment, created = Comment.objects.get_or_create(user=request.user, content_type=content_type, object_id=obj_id, content=content_data, parent=parent_obj)
+        return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
     context = {
         "title": instance.title,
         "instance": instance,
-        "share_string": share_string
+        "share_string": share_string,
+        "comments": comments,
+        "form": comment_form
     }
     return render(request, "post_detail.html", context)
 
