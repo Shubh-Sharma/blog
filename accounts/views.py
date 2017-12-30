@@ -9,6 +9,14 @@ from .forms import UserLoginForm, UserRegisterForm
 
 # Create your views here.
 
+
+def profile_view(request):
+    context = {
+        "title": request.user.username
+    }
+    return render(request, "profile.html", context)
+
+
 def login_view(request):
     form = UserLoginForm(request.POST or None)
     next = request.GET.get("next")

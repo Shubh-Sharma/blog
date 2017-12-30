@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{ title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<p class="lead">Logged in as {{ title }}</p>
+<a href="{% url 'logout' %}">Logout</a>
+<footer class="footer">
+  <div class="container">
+    <span class="text-muted">Copyright &copy; 2017 blog</span>
+  </div>
+</footer>
+<!--/Footer-->
+{% endblock %}
