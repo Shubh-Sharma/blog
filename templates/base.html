@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"> -->
     <!-- CDN -->
     <!-- Latest compiled and minified CSS -->
@@ -13,6 +14,11 @@
     <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/Shubh-Sharma/blog/master/static/css/style.css">
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> -->
     <title>{% block title %}try django 1.9{% endblock %}</title>
+    <style type="text/css">
+        body {
+            margin-top: 50px !important;
+        }
+    </style>
     {% block head %} {% endblock %}
 </head>
 <body>
