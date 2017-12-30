@@ -1,4 +1,7 @@
-from urllib import quote_plus
+try:
+    from urllib import quote_plus
+except:
+    from urllib.parse import quote_plus
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
