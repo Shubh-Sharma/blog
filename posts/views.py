@@ -33,7 +33,6 @@ def post_create(request):
 
 
 def post_detail(request, slug=None):
-    print(request.user.is_authenticated())
     instance = get_object_or_404(Post, slug=slug)
     share_string = quote_plus(instance.content)
     comments = instance.comments

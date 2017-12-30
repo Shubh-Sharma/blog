@@ -1,9 +1,11 @@
+from .base import *
+
 try:
-    from .production import *
+    from .local import *
 except:
     pass
 
 try:
-    from .local import *
+    from .production import *
 except:
     pass
