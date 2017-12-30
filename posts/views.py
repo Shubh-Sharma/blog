@@ -5,6 +5,7 @@ except:
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Q
@@ -15,6 +16,7 @@ from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 
 
+@login_required
 def post_create(request):
     # if not request.user.is_staff or not request.user.is_superuser:
     #     raise Http404
