@@ -1,6 +1,7 @@
 *.pyc
 **.pyc
 **/*.pyc
+.py[cod]
 *.sqlite*
 old_settings.py
 local.py
