@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'uh4er!(3xvkcjr@_4)#-cwvlt^@@(k5vm+7kh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['blogen.herokuapp.com', 'blogen.com']
+ALLOWED_HOSTS = ['blooogy.herokuapp.com', 'blooogy.com']
 
 
 LOGIN_URL = '/login/'
