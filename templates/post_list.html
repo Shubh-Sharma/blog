@@ -16,7 +16,7 @@
                                 <p>Author: {{ obj.user.get_full_name }}</p>
                             {% endif %}
                             <p>{{ obj.get_markdown|truncatechars_html:30 }}</p>
-                            <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary">View</a> {% if request.user.is_superuser %}<a href="{{ obj.get_edit_url }}" class="btn btn-default">Edit</a> <a href="{{ obj.get_delete_url }}" class="btn btn-danger">Delete</a>{% endif %}</p>
+                            <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary">View</a> {% if request.user.is_superuser  and request.user == obj.user %}<a href="{{ obj.get_edit_url }}" class="btn btn-default">Edit</a> <a href="{{ obj.get_delete_url }}" class="btn btn-danger">Delete</a>{% endif %}</p>
                         </div>
                     </div>
                 </div>

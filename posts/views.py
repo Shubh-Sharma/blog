@@ -13,8 +13,8 @@ from django.contrib.contenttypes.models import ContentType
 
 
 def post_create(request):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
+    # if not request.user.is_staff or not request.user.is_superuser:
+    #     raise Http404
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -30,6 +30,7 @@ def post_create(request):
 
 
 def post_detail(request, slug=None):
+    print(request.user.is_authenticated())
     instance = get_object_or_404(Post, slug=slug)
     share_string = quote_plus(instance.content)
     comments = instance.comments
@@ -38,19 +39,19 @@ def post_detail(request, slug=None):
         "object_id": instance.id
     }
     comment_form = CommentForm(request.POST or None, initial=initial_data)
-    if comment_form.is_valid():
+    if comment_form.is_valid() and request.user.is_authenticated():
         c_type = comment_form.cleaned_data.get('content_type')
         content_type = ContentType.objects.get(model=c_type)
         obj_id = comment_form.cleaned_data.get('object_id')
         content_data = comment_form.cleaned_data.get('content')
-        parent_id = None
+        parent_obj = None
         try:
             parent_id = int(request.POST.get("parent_id"))
         except:
             parent_id = None
         if parent_id:
             parent_qs = Comment.objects.filter(id=parent_id)
-            if parent_qs.exists():
+            if parent_qs.exists() and parent_qs.count() == 1:
                 parent_obj = parent_qs.first()
         new_comment, created = Comment.objects.get_or_create(user=request.user, content_type=content_type, object_id=obj_id, content=content_data, parent=parent_obj)
         return HttpResponseRedirect(new_comment.content_object.get_absolute_url())

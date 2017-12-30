@@ -9,6 +9,7 @@ from django.utils.safestring import mark_safe
 from markdown_deux import markdown
 from comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
+from .utils import get_read_time
 # Create your models here.
 
 
@@ -32,6 +33,7 @@ class Post(models.Model):
     content = models.TextField()
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+    read_time = models.IntegerField(default=0) # models.TimeField(null=True, blank=True)
 
     objects = PostManager()
 
@@ -85,6 +87,10 @@ def create_slug(instance, new_slug=None):
 def pre_save_post_reciever(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
+    if instance.content:
+        html_string = instance.get_markdown()
+        read_time = get_read_time(html_string)
+        instance.read_time = read_time
 
 
 pre_save.connect(pre_save_post_reciever, sender=Post)

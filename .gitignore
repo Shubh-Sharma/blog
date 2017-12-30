@@ -1,1 +1,8 @@
-*.pyc 
+*.pyc
+**.pyc
+**/*.pyc
+*.sqlite*
+old_settings.py
+local.py
+base.py
+*/migrations
