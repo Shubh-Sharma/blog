@@ -17,7 +17,7 @@ old_settings.py
 */migrations/*.py
 */migrations/*.pyc
 
-
+db.*
 db.sqlite3
 
 
