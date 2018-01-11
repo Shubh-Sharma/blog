@@ -1,0 +1,27 @@
+*::selection {
+    background-color: #A5D6A7;
+}
+
+body, input, button {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: #edf0f1;
+    margin-top: 10px;
+}
+
+.wmd-panel {
+    margin: 0 !important;
+    width: 100%;
+    min-width: 500px;
+}
+
+.controls select {
+    display: inline-block !important;
+    width: auto !important;
+}
+
+.comment-replies {
+    display: none;
+}

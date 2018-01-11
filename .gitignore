@@ -14,7 +14,12 @@ base.py
 .py[cod]
 *.sqlite*
 old_settings.py
-*/migrations
+*/migrations/*.py
+*/migrations/*.pyc
+
+
+db.sqlite3
+
 
 
 .DS_Store
