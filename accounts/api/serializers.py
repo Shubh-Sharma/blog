@@ -20,7 +20,7 @@ class UserDetailSerializer(ModelSerializer):
 
 class UserCreateSerializer(ModelSerializer):
     email = EmailField(required=True)
-    email2 = EmailField(label='Confirm Email')
+    email2 = EmailField(label='Confirm Email', read_only=True)
     class Meta:
         model = User
         fields = [
@@ -42,6 +42,19 @@ class UserCreateSerializer(ModelSerializer):
             #     raise ValidationError("User with this email address already exists.")
             return data
 
+        def validate_email(self, value):
+            data = self.get_initial()
+            email1 = data.get("email2")
+            email2 = value
+            if email1 != email2:
+                raise ValidationError("Emails must match.")
+            
+            user_qs = User.objects.filter(email=email2)
+            if user_qs.exists():
+                raise ValidationError("This user has already registered.")
+
+            return value
+
         def validate_email2(self, value):
             data = self.get_initial()
             email1 = data.get("email")
@@ -50,18 +63,26 @@ class UserCreateSerializer(ModelSerializer):
                 raise ValidationError("Emails must match.")
             return value
 
-        def validate_email(self, value):
-            data = self.get_initial()
-            email1 = data.get("email2")
-            email2 = value
-            user_qs = User.objects.filter(email=email2)
-            if user_qs.exists():
-                raise ValidationError("User with this email address already exists.")
-            if email1 != email2:
-                raise ValidationError("Emails must match.")
-            return value
+        # def validate_email2(self, value):
+        #     data = self.get_initial()
+        #     email1 = data.get("email")
+        #     email2 = value
+        #     if email1 != email2:
+        #         raise ValidationError("Emails must match.")
+        #     return value
 
-        def create(self, validated_data):
+        # def validate_email(self, value):
+        #     data = self.get_initial()
+        #     email1 = data.get("email2")
+        #     email2 = value
+        #     user_qs = User.objects.filter(email=email2)
+        #     if user_qs.exists():
+        #         raise ValidationError("User with this email address already exists.")
+        #     if email1 != email2:
+        #         raise ValidationError("Emails must match.")
+        #     return value
+
+        def create(self, validated_data, *args, **kwargs):
             username = validated_data["username"]
             email = validated_data["email"]
             password = validated_data["password"]
