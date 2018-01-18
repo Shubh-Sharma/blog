@@ -1,16 +1,8 @@
-try:
-    from .base import *
-except:
-    pass
+from .base import *
 
-try:
-    from .production import *
-except:
-    pass
+from .production import *
 
 try:
     from .local import *
 except:
     pass
-
-
