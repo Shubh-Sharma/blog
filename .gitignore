@@ -1,12 +1,6 @@
 blog/settings/local.py
-blog/settings/base.py
 
 */local.py
-*/base.py
-
-local.py
-base.py
-
 
 *.pyc
 **.pyc
