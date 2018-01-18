@@ -19,7 +19,7 @@ class PostManager(models.Manager):
 
 
 def upload_location(instance, filename):
-    return "%s/%s" %(instance.id, filename)
+    return "%s" %(filename)
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
